@@ -90,4 +90,8 @@ export default {
   .mobile .fixed-header {
     width: 100%;
   }
+
+  // .sidebar-container, .main-container {
+  //   filter: grayscale(1);
+  // }
 </style>
