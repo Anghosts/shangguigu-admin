@@ -1,3 +1,16 @@
+**本项目来自B站尚硅谷的教学视频：https://www.bilibili.com/video/BV1Vf4y1T7bw/**
+
+```bash
+# 获取项目
+git clone https://github.com/ai1010195/shangguigu-admin.git
+# 进入项目目录
+cd shangguigu-admin
+# 安装依赖
+npm i
+# 启动项目
+npm run dev
+```
+
 # vue-admin-template
 
 English | [简体中文](./README-zh.md)
