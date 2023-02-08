@@ -97,6 +97,13 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-  
+<style  scoped>
+  @media screen and (max-width:480px) {
+    .demo-form-inline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
 </style>

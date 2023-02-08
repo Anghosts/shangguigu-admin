@@ -52,9 +52,9 @@ export default {
       ],
       grid: {
         top: 0,
-        left: -40,
+        left: 0,
         bottom: 0,
-        right: -40
+        right: 0
       }
     })
   }

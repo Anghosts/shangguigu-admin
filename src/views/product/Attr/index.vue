@@ -13,12 +13,12 @@
           @click="addAttr"
         >添加属性</el-button>
         <!-- 表格 -->
-        <el-table style="margin-top:20px;" border :data="attrList" v-loading="listLoading">
-          <el-table-column type="index" label="序号" width="80" align="center">
+        <el-table style="margin-top:20px;" border :data="attrList" v-loading="listLoading" height="500">
+          <el-table-column type="index" label="序号" :width="styles.tableIndexWidth" align="center">
           </el-table-column>
           <el-table-column prop="attrName" label="属性名称" width="160">
           </el-table-column>
-          <el-table-column prop="prop" label="属性值列表">
+          <el-table-column prop="prop" label="属性值列表" :width="styles.attrValueWdith">
             <template slot-scope="{row}">
               <el-tag 
                 type="success"
@@ -30,12 +30,12 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="prop" label="操作" width="160">
+          <el-table-column prop="prop" label="操作" width="120">
             <template v-slot="{row}">
               <el-button 
                 type="warning" 
                 icon="el-icon-edit" 
-                size="small" 
+                :size="styles.buttonSize" 
                 title="修改"
                 @click="editAttr(row)"
               ></el-button>
@@ -44,7 +44,7 @@
                   slot="reference" 
                   type="danger" 
                   icon="el-icon-delete" 
-                  size="small" 
+                  :size="styles.buttonSize"  
                   title="删除"
                 ></el-button>
               </el-popconfirm>
@@ -139,6 +139,7 @@ export default {
       listLoading: false,
       // 属性值验证是否通过
       isAttrAuth: true,
+      styles: {}
     }
   },
   methods: {
@@ -263,6 +264,10 @@ export default {
         this.$message.error('保存失败！' + err.data);
       }
     }
+  },
+  mounted() {
+    // 获取布局参数
+    this.styles = this.$store.state.styles
   }
 }
 </script>

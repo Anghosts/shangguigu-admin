@@ -6,7 +6,7 @@
         <el-radio-button label="全部渠道" ></el-radio-button>
         <el-radio-button label="线上"></el-radio-button>
         <el-radio-button label="门店"></el-radio-button>
-      </el-radio-group>
+      </el-radio-group> 
     </div>
     <div class="charts" ref="charts"></div>
   </el-card>
@@ -85,6 +85,18 @@ export default {
   }
 }
 .charts {
+  width: 100%;
   height: 320px;
+}
+
+@media screen and (max-width: 420px) {
+  .category-head {
+    flex-direction: column;
+    align-items: start;
+
+    >span {
+      margin-bottom: 8px;
+    }
+  }
 }
 </style>

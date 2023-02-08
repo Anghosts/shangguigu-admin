@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="card-item">
     <div class="card-header">
       <span>{{title}}</span>
       <i class="el-icon-info"></i>
@@ -22,6 +22,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .card-item {
+    margin-bottom: 5px;
+  }
   .card-header {
     display: flex;
     justify-content: space-between;
@@ -41,5 +44,6 @@ export default {
     padding: 10px 0 0;
     margin-top: 3px;
     border-top: 1px solid #eee;
+    white-space: nowrap;
   }
 </style>

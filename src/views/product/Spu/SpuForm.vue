@@ -38,63 +38,63 @@
         <el-button 
           type="primary" 
           icon="el-icon-plus" 
-          style="margin-left:10px;" 
+          class="saleAttr"
           :disabled="!attrInfo" 
           @click="addSaleAttr"
         >添加销售属性</el-button>
-        <el-table style="width:100%;margin-top:10px;" border :data="spu.spuSaleAttrList">
-          <el-table-column type="index" label="序号" width="80" align="center">
-          </el-table-column>
-          <el-table-column prop="saleAttrName" label="属性名" width="140">
-          </el-table-column>
-          <el-table-column prop="prop" label="属性值名称列表" >
-            <template v-slot="{row}">
-              <!-- @close="handleClose(tag)" -->
-              <el-tag
-                :key="tag.id"
-                v-for="(tag,index) in row.spuSaleAttrValueList"
-                closable
-                :disable-transitions="false"
-                @close="row.spuSaleAttrValueList.splice(index, 1)"
-              >
-                {{tag.saleAttrValueName}}
-              </el-tag>
-              <el-input
-                class="input-new-tag"
-                v-if="row.inputVisible"
-                v-model="row.inputValue"
-                ref="saveTagInput"
-                size="small"
-                @keyup.enter.native="$event.target.blur"
-                @blur="handleInputConfirm(row)"
-              >
-              </el-input>
-              <el-button v-else class="button-new-tag" size="small" @click="addSaleAttrValue(row)">添加</el-button>
-            </template>
-          </el-table-column>
-          <el-table-column prop="prop" label="操作" width="140">
-            <template v-slot="{$index}">
-              <el-button 
-                title="删除"
-                icon="el-icon-delete" 
-                type="danger" size="mini" 
-                @click="spu.spuSaleAttrList.splice($index,1)"
-              ></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form-item>
-      <el-form-item label="">
-        <el-button type="primary" @click="saveSpu">保存</el-button>
-        <el-button @click="cancel">取消</el-button>
       </el-form-item>
     </el-form>
+    <el-table style="width:100%;margin-top:10px;" border :data="spu.spuSaleAttrList">
+      <el-table-column type="index" label="序号" :width="styles.tableIndexWidth" align="center">
+      </el-table-column>
+      <el-table-column prop="saleAttrName" label="属性名" width="100">
+      </el-table-column>
+      <el-table-column prop="prop" label="属性值名称列表" :width="styles.attrValueWdith">
+        <template v-slot="{row}">
+          <el-tag
+            :key="tag.id"
+            v-for="(tag,index) in row.spuSaleAttrValueList"
+            closable
+            :disable-transitions="false"
+            @close="row.spuSaleAttrValueList.splice(index, 1)"
+          >
+            {{tag.saleAttrValueName}}
+          </el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="row.inputVisible"
+            v-model="row.inputValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="$event.target.blur"
+            @blur="handleInputConfirm(row)"
+          >
+          </el-input>
+          <el-button v-else class="button-new-tag" size="small" @click="addSaleAttrValue(row)">添加</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="prop" label="操作" width="140">
+        <template v-slot="{$index}">
+          <el-button 
+            title="删除"
+            icon="el-icon-delete" 
+            type="danger" size="mini" 
+            @click="spu.spuSaleAttrList.splice($index,1)"
+          ></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div style="margin-top:15px;">
+      <el-button type="primary" @click="saveSpu">保存</el-button>
+      <el-button @click="cancel">取消</el-button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'SpuForm',
+  props: ['styles'],
   data() {
     return {
       dialogImageUrl: '',
@@ -112,33 +112,9 @@ export default {
         // spu名称
         spuName: '',
         // spu图片信息
-        spuImageList: [
-          // {
-          //   "id": 0,
-          //   "imgName": "string",
-          //   "imgUrl": "string",
-          //   "spuId": 0
-          // }
-        ],
+        spuImageList: [],
         // spu销售属性信息
-        spuSaleAttrList: [
-          // {
-          //   baseSaleAttrId: 0,
-          //   id: 0,
-          //   saleAttrName: "string",
-          //   spuId: 0,
-          //   spuSaleAttrValueList: [
-          //     {
-          //       "baseSaleAttrId": 0,
-          //       "id": 0,
-          //       "isChecked": "string",
-          //       "saleAttrName": "string",
-          //       "saleAttrValueName": "string",
-          //       "spuId": 0
-          //     }
-          //   ]
-          // }
-        ]
+        spuSaleAttrList: []
       },
       attrInfo: ''  // 未添加的销售属性信息
     };
@@ -283,5 +259,14 @@ export default {
     width: 90px;
     margin-left: 10px;
     vertical-align: bottom;
+  }
+  .saleAttr {
+    margin-left: 10px;
+  }
+  @media screen and (max-width:480px) {
+    .saleAttr {
+    margin-left: 0;
+    margin-top: 5px;
+  }
   }
 </style>

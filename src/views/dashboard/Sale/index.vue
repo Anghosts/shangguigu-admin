@@ -1,32 +1,41 @@
 <template>
   <el-card style="margin:10px 0;">
     <div slot="header" class="sale-head">
-      <el-tabs class="tab" v-model="activeName">
-        <el-tab-pane label="销售额" name="sale"></el-tab-pane>
-        <el-tab-pane label="访问量" name="visits"></el-tab-pane>
-      </el-tabs>
-      <div class="right">
-        <span @click="setToday">今日</span>
-        <span @click="setWeek">本周</span>
-        <span @click="setMonth">本月</span>
-        <span @click="setYear">今年</span>
-        <el-date-picker
-          class="date"
-          v-model="date"
-          value-format="yyyy-MM-dd"
-          size="small"
-          type="daterange"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :default-time="['00:00:00', '23:59:59']">
-        </el-date-picker>
-      </div>
+      <el-row>
+        <el-col :span="14" :xs="24" :sm="8" :md="12" :lg="14" :xl="16">
+          <el-tabs class="tab" v-model="activeName">
+            <el-tab-pane label="销售额" name="sale"></el-tab-pane>
+            <el-tab-pane label="访问量" name="visits"></el-tab-pane>
+          </el-tabs>
+        </el-col>
+        <el-col :span="10" :xs="24" :sm="16" :md="12" :lg="10" :xl="8">
+          <div class="right">
+            <div class="date-time">
+              <span @click="setToday">今日</span>
+              <span @click="setWeek">本周</span>
+              <span @click="setMonth">本月</span>
+              <span @click="setYear">今年</span>
+            </div>
+            <el-date-picker
+              class="date"
+              v-model="date"
+              value-format="yyyy-MM-dd"
+              size="small"
+              type="daterange"
+              placeholder="选择日期"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :default-time="['00:00:00', '23:59:59']">
+            </el-date-picker>
+          </div>
+        </el-col>
+      </el-row>  
     </div>
     <el-row :gutter="10" class="sale-content">
-      <el-col :span="18">
+      <el-col :span="18" :xs="24" :sm="24" :md="24" :xl="18">
         <div class="charts" ref="charts"></div>
       </el-col>
-      <el-col :span="6" class="right">
+      <el-col :span="6" class="right" :xs="24" :sm="24" :md="24" :xl="6">
         <h3>门店{{title}}排名</h3>
         <ul class="sale-sort">
           <li v-for="sale in saleSort" :key="sale.id">
@@ -51,6 +60,7 @@ export default {
       activeName: 'sale',
       charts: null,
       date: [],
+      date2: '',
       saleSort: [
         {id:1,name:'蜜雪冰城',index:1,count:'323,578'},
         {id:2,name:'麦当劳',index:2,count:'315,598'},
@@ -146,25 +156,26 @@ export default {
 
 <style lang="scss" scoped>
 .sale-head {
-  position: relative;
-  display: flex;
-
   .tab {
     width: 100%;
   }
 
   .right {
-    position: absolute;
-    right: 0;
-    >span {
-      margin: 0 8px;
-      font-size: 14px;
-      cursor: pointer;
-      &:hover {
-        color: #409EFF;
+    display: flex;
+    align-items: center;
+    .date-time {
+      min-width: 176px;
+      >span {
+        margin: 0 8px;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover {
+          color: #409EFF;
+        }
       }
     }
     .date {
+      flex: 1;
       margin-left: 25px;
     }
   }
@@ -173,7 +184,7 @@ export default {
 .sale-content {
   .charts {
     width: 100%;
-    height: 370px;
+    height: 470px;
   }
   .right {
     h3 {
@@ -231,5 +242,36 @@ export default {
 }
 ::v-deep .el-card__header {
   padding-bottom: 0;
+}
+::v-deep .el-date-editor--daterange.el-input__inner {
+  width: 100%;
+}
+
+@media screen and (max-width: 580px) {
+  .sale-head {
+    .right {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .date-time {
+        margin: 10px 0 5px;
+      }
+      .date {
+        margin-left: 0;
+      }
+    }
+  }
+  .sale-content {
+    .right {
+      margin-top: 10px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .sale-head {
+    .right {
+      margin-bottom: 8px;
+    }
+  }
 }
 </style>

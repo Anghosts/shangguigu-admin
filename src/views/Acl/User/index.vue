@@ -7,7 +7,6 @@
       </el-form-item>
       <!-- 查询与情况的按钮 -->
       <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-      <el-button type="default" @click="resetSearch">清空</el-button>
     </el-form>
 
     <div style="margin-bottom: 20px">
@@ -23,6 +22,7 @@
       stripe
       v-loading="listLoading"
       :data="users"
+      height="470"
       @selection-change="handleSelectionChange">
 
       <el-table-column
@@ -43,14 +43,14 @@
       <el-table-column prop="gmtCreate" label="创建时间" width="180"/>
       <el-table-column prop="gmtModified" label="更新时间" width="180"/>
 
-      <el-table-column label="操作" width="230">
+      <el-table-column label="操作" width="190">
         <template slot-scope="{row}">
           <HintButton type="info" size="mini" icon="el-icon-user-solid" title="分配角色"
             @click="showAssignRole(row)"/>
           <HintButton type="warning" size="mini" icon="el-icon-edit" title="修改用户"
             @click="showUpdateUser(row)"/>
           <el-popconfirm :title="`确定删除【 ${row.username} 】吗?`" @onConfirm="removeUser(row.id)">
-            <HintButton style="margin-left:10px" slot="reference" type="danger" size="mini" icon="el-icon-delete" 
+            <HintButton style="margin-left:5px" slot="reference" type="danger" size="mini" icon="el-icon-delete" 
               title="删除用户"/>
           </el-popconfirm>
         </template>
@@ -58,13 +58,14 @@
     </el-table>
     <!-- 分页器 -->
     <el-pagination
+      background
       :current-page="page"
       :total="total"
       :page-size="limit"
       :page-sizes="[5,10,20]"
       style="padding: 20px 0;"
       align="center"
-      layout="prev, pager, next, jumper, ->, sizes, total"
+      :layout="styles.paginationLayout"
       @current-change="getUsers"
       @size-change="handleSizeChange"
     />
@@ -118,6 +119,7 @@ export default {
 
   data () {
     return {
+      styles: {},
       listLoading: false, // 是否显示列表加载的提示
       searchObj: { // 包含请求搜索条件数据的对象
         username: ''
@@ -153,6 +155,10 @@ export default {
   //发请求一般情况下，我们都是在mounted去发，但是也可以在created内部去发
   created () {
     this.getUsers()
+  },
+  mounted() {
+    // 获取布局参数
+    this.styles = this.$store.state.styles
   },
 
   methods: {

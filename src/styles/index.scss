@@ -61,5 +61,6 @@ div:focus {
 
 // main-container global css
 .app-main {
-  padding: 20px;
+  padding: var(--main-padding);
 }
+

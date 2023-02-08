@@ -1,23 +1,23 @@
 <template>
   <div>
     <!-- 表格 -->
-    <el-table :data="records" style="width: 100%" border v-loading="loading">
-      <el-table-column type="index" label="序号" width="80" align="center">
+    <el-table :data="records" style="width: 100%" border v-loading="loading" height="600">
+      <el-table-column type="index" label="序号" :width="styles.tableIndexWidth" align="center">
       </el-table-column>
-      <el-table-column prop="skuName" label="名称" width="width">
+      <el-table-column prop="skuName" label="名称" :width="styles.skuWidth">
       </el-table-column>
-      <el-table-column prop="skuDesc" label="描述" width="width">
+      <el-table-column prop="skuDesc" label="描述" :width="styles.skuWidth">
       </el-table-column>
-      <el-table-column prop="prop" label="默认图片" width="160" align="center">
+      <el-table-column prop="prop" label="默认图片" width="140" align="center">
         <template v-slot="{row}">
-          <el-image style="width: 100px; height: 100px" :src="row.skuDefaultImg"></el-image>
+          <el-image :style="{widht:styles.skuImgWidth,height:styles.skuImgWidth}" :src="row.skuDefaultImg"></el-image>
         </template>
       </el-table-column>
       <el-table-column prop="weight" label="重量(KG)" width="100">
       </el-table-column>
       <el-table-column prop="price" label="价格(元)" width="100">
       </el-table-column>
-      <el-table-column prop="prop" label="操作" width="width">
+      <el-table-column prop="prop" label="操作" width="250">
         <template v-slot="{row}">
           <el-button 
             type="success" 
@@ -26,23 +26,27 @@
             title="上架" 
             v-if="row.isSale==0"
             @click="sale(row)"
+            style="margin:var(--button-margin);"
           >上架</el-button>
           <el-button
            type="success"
            icon="el-icon-bottom" 
-           size="mini" title="下架"
+           size="mini" 
+           title="下架"
            v-else 
            @click="cancelSale(row)"
+           style="margin:var(--button-margin);"
           >下架</el-button>
-          <el-button type="primary" icon="el-icon-edit" size="mini" title="编辑" @click="edit"></el-button>
-          <el-button type="info" icon="el-icon-info" size="mini" title="详情" @click="showSkuInfo(row)"></el-button>
-          <el-popconfirm :title="`你确定删除【 ${row.skuName} 】吗？`" @onConfirm="deleteSku(row.id)" style="margin-left:10px;">
+          <el-button type="primary" icon="el-icon-edit" size="mini" title="编辑" @click="edit" style="margin:var(--button-margin);"></el-button>
+          <el-button type="info" icon="el-icon-info" size="mini" title="详情" @click="showSkuInfo(row)" style="margin:var(--button-margin);"></el-button>
+          <el-popconfirm :title="`你确定删除【 ${row.skuName} 】吗？`" @onConfirm="deleteSku(row.id)">
             <el-button 
               slot="reference"
               type="danger" 
               icon="el-icon-delete" 
               size="mini" 
               title="删除"
+              style="margin:var(--button-margin);"
             ></el-button>
           </el-popconfirm>
         </template>
@@ -57,27 +61,28 @@
       :current-page="page"
       :page-sizes="[5, 10, 20]"
       :page-size="limit"
-      layout="prev, pager, next, jumper, ->,sizes, total"
+      :layout="styles.paginationLayout"
+      :pager-count="styles.paginationCount"
       :total="total"
       background>
     </el-pagination>
     <!-- sku 详情 -->
-    <el-drawer :visible.sync="drawer" :with-header="false" size="50%">
+    <el-drawer :visible.sync="drawer" :with-header="false" :size="styles.skuDrawerSize">
       <el-row :gutter="20">
-        <el-col :span="6">名称</el-col>
-        <el-col :span="16">{{skuInfo.skuName}}</el-col>
+        <el-col :span="6" :xs="8">名称</el-col>
+        <el-col :span="16" :xs="14">{{skuInfo.skuName}}</el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6">描述</el-col>
-        <el-col :span="16">{{skuInfo.skuDesc}}</el-col>
+        <el-col :span="6" :xs="8">描述</el-col>
+        <el-col :span="16" :xs="14">{{skuInfo.skuDesc}}</el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6">价格</el-col>
-        <el-col :span="16">{{skuInfo.price}}</el-col>
+        <el-col :span="6" :xs="8">价格</el-col>
+        <el-col :span="16" :xs="14">{{skuInfo.price}}</el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6">平台属性</el-col>
-        <el-col :span="16">
+        <el-col :span="6" :xs="8">平台属性</el-col>
+        <el-col :span="16" :xs="14">
           <el-tag 
             style="margin-right:10px;"
             type="success" 
@@ -87,16 +92,20 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6">商品图片</el-col>
-        <el-col :span="16">
+        <el-col :span="6" :xs="8">商品图片</el-col>
+        <el-col :span="16" :xs="14">
           <el-carousel 
             :interval="5000" 
             indicator-position="none" 
-            style="width:400px;" 
-            height="400px"
+            :style="{width:styles.skuDrawerImgWidth}" 
+            :height="styles.skuDrawerImgWidth"
           >
             <el-carousel-item v-for="image in skuInfo.skuImageList" :key="image.id">
-              <el-image style="width:400px;border:1px solid #eee;" :src="image.imgUrl"></el-image>
+              <el-image 
+                style="border:1px solid #eee;" 
+                :styles="{width:styles.skuDrawerImgWidth}"
+                :src="image.imgUrl"
+              ></el-image>
             </el-carousel-item>
           </el-carousel>
         </el-col>
@@ -120,7 +129,9 @@ export default {
       // sku 详情信息
       skuInfo: {},
       // sku 详情显示状态
-      drawer: false
+      drawer: false,
+      // 布局参数
+      styles: {}
     }
   },
   methods: {
@@ -181,7 +192,9 @@ export default {
     }
   },
   mounted() {
-    this.getSkuList();
+    this.getSkuList()
+    // 获取布局参数
+    this.styles = this.$store.state.styles
   }
 }
 </script>

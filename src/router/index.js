@@ -127,10 +127,11 @@ export const asyncRoutes = [
 export const anyRoutes = { path: '*', redirect: '/404', hidden: true }
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   // 权限展示路由功能尚不完善，暂时测试用
-  routes: constantRoutes.concat(asyncRoutes, anyRoutes)
+  routes: constantRoutes.concat(asyncRoutes, anyRoutes),
+  // routes: constantRoutes,
 })
 
 const router = createRouter()

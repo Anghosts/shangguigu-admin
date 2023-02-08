@@ -1,31 +1,37 @@
 <template>
   <div>
     <!-- 按钮 -->
-    <el-button type="primary" icon="el-icon-plus" @click="addTradeMark">添加</el-button>
+    <el-button type="primary" icon="el-icon-plus" @click="addTradeMark" class="add-btn">添加</el-button>
     <!-- 表格 -->
     <el-table 
       :data="dataList" 
       border 
       style="margin-top: 20px;"
       v-loading="listLoading"
+      height="540"
     >
-      <el-table-column type="index" label="序号" width="80px" align="center"></el-table-column>
-      <el-table-column label="品牌名称" prop="tmName"></el-table-column>
-      <el-table-column label="品牌 LOGO">
+      <el-table-column type="index" label="序号" :width="styles.tableIndexWidth" align="center"></el-table-column>
+      <el-table-column label="品牌名称" prop="tmName" width="150"></el-table-column>
+      <el-table-column label="品牌 LOGO" :width="styles.logoWidth">
         <template slot-scope="{row}">
           <img :src="row.logoUrl" style="height:50px;">
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="115px">
         <template v-slot="{row}">
-          <el-button type="warning" icon="el-icon-edit" size="small" @click="updateTradeMark(row)">修改</el-button>
-          <el-popconfirm :title="`你确定删除【 ${row.tmName} 】吗？`" @onConfirm="removeTradeMark(row.id)" style="margin-left:10px;">
+          <el-button type="warning" icon="el-icon-edit" :size="styles.buttonSize" @click="updateTradeMark(row)"></el-button>
+          <el-popconfirm 
+            :title="`你确定删除【 ${row.tmName} 】吗？`" 
+            @onConfirm="removeTradeMark(row.id)"
+            
+          >
             <el-button 
               slot="reference"
               type="danger" 
               icon="el-icon-delete" 
-              size="small" 
-            >删除</el-button>
+              :size="styles.buttonSize" 
+              style="margin:var(--button-margin);"
+            ></el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -43,7 +49,8 @@
       :current-page="page"
       :page-size="limit"
       :page-sizes="[5,10,20]"
-      layout="prev, pager, next, jumper, ->,sizes, total"
+      :layout="styles.paginationLayout"
+      :pager-count="styles.paginationCount"
       :total="total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
@@ -114,7 +121,9 @@ export default {
         logoUrl: [
           { required: true, message: '请选择品牌图片' },
         ]
-      }
+      },
+      // 布局参数
+      styles: {}
 
     }
   },
@@ -227,11 +236,13 @@ export default {
       });
 
       
-    }
+    },
   },
   mounted() {
     // 获取品牌数据
-    this.getPageList();
+    this.getPageList()
+    // 获取布局参数
+    this.styles = this.$store.state.styles
   }
 }
 </script>

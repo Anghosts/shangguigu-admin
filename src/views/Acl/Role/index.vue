@@ -6,7 +6,7 @@
       </el-form-item>
 
       <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-      <el-button @click="resetSearch">清空</el-button>
+      <!-- <el-button @click="resetSearch" class="clear-btn">清空</el-button> -->
     </el-form>
 
     <div style="margin-bottom: 20px">
@@ -20,6 +20,7 @@
       style="width: 100%"
       v-loading="listLoading"
       :data="roles"
+      height="470"
       @selection-change="handleSelectionChange">
 
       <el-table-column
@@ -29,29 +30,28 @@
       <el-table-column
         type="index"
         label="序号"
-        width="80"
+        :width="$store.state.styles.tableIndexWidth"
         align="center">
       </el-table-column>
 
-      <el-table-column label="角色名称">
+      <el-table-column label="角色名称" :width="$store.state.styles.roleWidth">
         <template slot-scope="{row}">
           <template v-if="row.edit">
             <el-input v-model="row.roleName" class="edit-input" size="small" />
             <el-button
               class="cancel-btn"
-              size="small"
-              icon="el-icon-refresh"
+              size="mini"
+              icon="el-icon-circle-close"
               type="warning"
               @click="cancelEdit(row)"
-            >
-              取消
-            </el-button>
+              style="margin-top:3px;"
+            ></el-button>
           </template>
           <span v-else>{{ row.roleName }}</span>
         </template>
       </el-table-column>
       
-      <el-table-column label="操作" width="300">
+      <el-table-column label="操作" width="185">
         <template slot-scope="{row}">
           <HintButton size="mini" type="info" icon="el-icon-lock" title="分配权限"
             @click="$router.push(`/acl/role/auth/${row.id}?roleName=${row.roleName}`)"/>
@@ -70,13 +70,14 @@
 
     <!-- 分页组件 -->
     <el-pagination
+      background
       :current-page="page"
       :total="total"
       :page-size="limit"
       :page-sizes="[5,10,20]"
       align="center"
       style="padding: 20px 0;"
-      layout="prev, pager, next, jumper, ->, sizes, total"
+      :layout="$store.state.styles.paginationLayout"
       @current-change="getRoles"
       @size-change="handleSizeChange"
     />
@@ -258,5 +259,11 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+
+@media screen and (max-width:480px) {
+  .clear-btn {
+    margin-bottom: 10px;
+  }
 }
 </style>

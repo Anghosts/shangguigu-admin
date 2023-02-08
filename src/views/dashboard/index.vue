@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <el-row :gutter="10">
-      <el-col :span="6">
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6">
         <Card title="总销售额" count="￥123456">
           <template v-slot:charts>
             <div class="sales">
@@ -14,7 +14,7 @@
           </template>
         </Card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6">
         <Card title="访问量" :count="456789">
           <template v-slot:charts>
             <LineChart />
@@ -24,7 +24,7 @@
           </template>
         </Card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6">
         <Card title="支付笔数" :count="987654">
           <template v-slot:charts>
             <BarChart />
@@ -34,7 +34,7 @@
           </template>
         </Card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="6" :xs="24" :sm="12" :md="12" :lg="6">
         <Card title="运营活动效果" count="78%">
           <template v-slot:charts>
             <ProgressChart />

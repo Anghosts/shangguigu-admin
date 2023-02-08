@@ -47,3 +47,10 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-card__body {
+  padding: var(--main-padding);
+}
+.el-dialog {
+  width: var(--dialog-width);
+}

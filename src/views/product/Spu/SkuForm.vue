@@ -50,39 +50,39 @@
           </el-form-item>
         </el-form>
       </el-form-item>
-      <el-form-item label="图片列表">
-        <el-table style="width: 100%" :data="spuImagesList" border @selection-change="handleSelectionChange">
-          <el-table-column
-            type="selection"
-            width="80"
-            align="center">
-          </el-table-column>
-          <el-table-column prop="" label="图片">
-            <template v-slot="{row}">
-              <el-image style="width: 100px; height: 100px" :src="row.imgUrl"></el-image>
-            </template>
-          </el-table-column>
-          <el-table-column prop="imgName" label="名称">
-          </el-table-column>
-          <el-table-column prop="prop" label="操作">
-            <template v-slot="{row}">
-              <el-button type="primary" size="mini" v-if="row.isDefault == 0" @click="changeDefault(row)">设为默认</el-button>
-              <el-tag type="success" v-else :disable-transitions="true">默认</el-tag>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form-item>
-      <el-form-item label="">
-        <el-button type="primary" @click="saveSku">保存</el-button>
-        <el-button @click="cancel">取消</el-button>
-      </el-form-item>
+      <el-form-item label="图片列表"></el-form-item>
     </el-form>
+    <el-table style="width: 100%" :data="spuImagesList" border @selection-change="handleSelectionChange">
+      <el-table-column
+        type="selection"
+        :width="styles.tableIndexWidth"
+        align="center">
+      </el-table-column>
+      <el-table-column prop="" label="图片" :width="styles.skuWidth">
+        <template v-slot="{row}">
+          <el-image style="width: 100px; height: 100px" :src="row.imgUrl"></el-image>
+        </template>
+      </el-table-column>
+      <el-table-column prop="imgName" label="名称" :width="styles.skuWidth">
+      </el-table-column>
+      <el-table-column prop="prop" label="操作" width="105">
+        <template v-slot="{row}">
+          <el-button type="primary" size="mini" v-if="row.isDefault == 0" @click="changeDefault(row)">设为默认</el-button>
+          <el-tag type="success" v-else :disable-transitions="true">默认</el-tag>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div style="margin-top:10px;">
+      <el-button type="primary" @click="saveSku">保存</el-button>
+      <el-button @click="cancel">取消</el-button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'SkuForm',
+  props: ['styles'],
   data() {
     return {
       baseImgUrl: 'http://139.198.127.41:9000/sph/20221123/',
@@ -100,39 +100,11 @@ export default {
         skuDesc: '',
         skuDefaultImg: '',
         // 平台属性
-        skuAttrValueList: [
-          // {
-          //   "attrId": 0,
-          //   "attrName": "string",
-          //   "id": 0,
-          //   "skuId": 0,
-          //   "valueId": 0,
-          //   "valueName": "string"
-          // }
-        ],
+        skuAttrValueList: [],
         // 图片信息
-        skuImageList: [
-          // {
-          //   "id": 0,
-          //   "imgName": "string",
-          //   "imgUrl": "string",
-          //   "isDefault": "string",
-          //   "skuId": 0,
-          //   "spuImgId": 0
-          // }
-        ],
+        skuImageList: [],
         // 销售属性
-        skuSaleAttrValueList: [
-          // {
-          //   "id": 0,
-          //   "saleAttrId": 0,
-          //   "saleAttrName": "string",
-          //   "saleAttrValueId": 0,
-          //   "saleAttrValueName": "string",
-          //   "skuId": 0,
-          //   "spuId": 0
-          // }
-        ],
+        skuSaleAttrValueList: [],
       }
     }
   },

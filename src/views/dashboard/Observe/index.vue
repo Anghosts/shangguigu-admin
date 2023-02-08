@@ -1,7 +1,7 @@
 <template>
-  <el-row :gutter="10">
-    <el-col :span="12"><Search /></el-col>
-    <el-col :span="12"><Category /></el-col>
+  <el-row :gutter="10" class="observe">
+    <el-col class="mb" :span="12" :xs="24" :sm="24" :md="12"><Search /></el-col>
+    <el-col class="mb" :span="12" :xs="24" :sm="24" :md="12"><Category /></el-col>
   </el-row>
 </template>
 
@@ -19,5 +19,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  
+  .mb {
+    margin-bottom: 5px;
+  }
 </style>

@@ -1,0 +1,47 @@
+:root {
+  --table-index-width:80px;
+  --pagepagination-layout:prev,pager,next,jumper,->,sizes,total;
+  --pagepagination-count:7;
+  --button-size:small;
+  --button-margin:0 0 0 5px;
+  --logo-width: ;
+  --attr-value-width: ;
+  --spu-width: ;
+  --sku-width: ;
+  --sku-list-width: ;
+  --sku-img-width:100px;
+  --sku-drawer-size:50%;
+  --sku-drawer-img-width:400px;
+  --main-padding:20px;
+  --dialog-width:50%;
+  --dashboard-search-table-width: ;
+  --role-width: ;
+  --permission-width: ;
+}
+
+
+@media screen and (max-width:480px) {
+  :root {
+    --table-index-width:60px;
+    --pagepagination-layout:pager,sizes;
+    --pagepagination-count:5;
+    --button-size:mini;
+    --button-margin:0 0 0 5px;
+    --logo-width:220px;
+    --attr-value-width:380px;
+    --spu-width:200px;
+    --sku-width:200px;
+    --sku-list-width:140px;
+    --sku-img-width:50px;
+    --sku-drawer-size:85%;
+    --sku-drawer-img-width:200px;
+    --main-padding:10px;
+    --dialog-width:100%;
+    --dashboard-search-table-width:100px;
+    --role-width:260px;
+    --permission-width:160px;
+  }
+  .el-message-box {
+    width: 100%;
+  }
+}

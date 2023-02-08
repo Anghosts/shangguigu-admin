@@ -38,18 +38,21 @@
       <el-table-column
         prop="name"
         label="名称"
+        :width="$store.state.styles.permissionWidth"
       />
       <el-table-column
         prop="code"
         label="权限值"
+        :width="$store.state.styles.permissionWidth"
       />
 
       <el-table-column
         prop="toCode"
         label="跳转权限值"
+        :width="$store.state.styles.permissionWidth"
       />
 
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="185">
         <template slot-scope="{row}">
           
           <HintButton

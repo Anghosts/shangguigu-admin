@@ -14,7 +14,7 @@
       </el-dropdown>
     </div>
     <el-row :gutter="40">
-      <el-col :span="12" class="left">
+      <el-col :span="12" class="left" :xs="24">
         <span>搜索用户数</span> <i class="el-icon-info"></i>
         <p>
           <span class="count">123321</span> 
@@ -22,7 +22,7 @@
         </p>
         <LineChart />
       </el-col>
-      <el-col :span="12" class="right">
+      <el-col :span="12" class="right" :xs="24">
         <span>人均搜索次数</span> <i class="el-icon-info"></i>
         <p>
           <span class="count">15</span> 
@@ -32,13 +32,13 @@
       </el-col>
     </el-row>
     <el-table style="width:100%;margin:20px 0 10px;" border>
-      <el-table-column label="排名" width="100" type="index" align="center">
+      <el-table-column label="排名" :width="styles.dashboardTableWidth" type="index" align="center">
       </el-table-column>
-      <el-table-column prop="prop" label="搜索关键字" width="width">
+      <el-table-column prop="prop" label="搜索关键字" :width="styles.dashboardTableWidth">
       </el-table-column>
-      <el-table-column prop="prop" label="用户数" width="width"  sortable>
+      <el-table-column prop="prop" label="用户数" :width="styles.dashboardTableWidth" sortable>
       </el-table-column>
-      <el-table-column prop="prop" label="周涨幅" width="width" sortable>
+      <el-table-column prop="prop" label="周涨幅" :width="styles.dashboardTableWidth" sortable>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -57,11 +57,15 @@ export default {
   name: 'Search',
   data() {
     return {
-      
+      styles: {}
     }
   },
   components: {
     LineChart
+  },
+  mounted() {
+    // 获取布局参数
+    this.styles = this.$store.state.styles
   }
 }
 </script>
